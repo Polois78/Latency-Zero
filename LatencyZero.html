@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latency Zero — Enter the Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan: #00f5ff;
+      --purple: #b400ff;
+      --pink: #ff0090;
+      --bg: #020510;
+      --bg2: #060c1a;
+      --text: #c8e0ff;
+      --glow-cyan: 0 0 8px #00f5ff, 0 0 20px #00f5ff55;
+      --glow-purple: 0 0 8px #b400ff, 0 0 20px #b400ff55;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    /* ── SCANLINES overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,245,255,0.015) 2px,
+        rgba(0,245,255,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(180deg, rgba(2,5,16,0.95) 0%, transparent 100%);
+      border-bottom: 1px solid rgba(0,245,255,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); text-shadow: var(--glow-cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grid background */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      transform: perspective(600px) rotateX(20deg) scale(1.3);
+      transform-origin: center 80%;
+      animation: gridPulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes gridPulse {
+      from { opacity: 0.5; }
+      to   { opacity: 1; }
+    }
+
+    /* Glow orb */
+    #hero::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(180,0,255,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: orbFloat 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbFloat {
+      from { transform: translate(-50%, -52%) scale(1); }
+      to   { transform: translate(-50%, -48%) scale(1.1); }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      padding: 0.3rem 1rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--cyan) 0%, #fff 40%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glitch 6s infinite, fadeUp 0.8s 0.2s ease both;
+    }
+
+    @keyframes glitch {
+      0%, 92%, 100% { transform: none; filter: none; }
+      93%  { transform: skewX(-2deg); filter: drop-shadow(2px 0 var(--pink)); }
+      94%  { transform: skewX(2deg);  filter: drop-shadow(-2px 0 var(--cyan)); }
+      95%  { transform: none; }
+      96%  { transform: skewX(-1deg) translateX(3px); }
+      97%  { transform: none; }
+    }
+
+    .hero-tagline {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: rgba(200,224,255,0.7);
+      letter-spacing: 0.05em;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .hero-desc {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: rgba(200,224,255,0.5);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+      animation: fadeUp 0.8s 0.6s ease both;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeUp 0.8s 0.8s ease both;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      padding: 1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 20px rgba(0,245,255,0.4);
+    }
+    .btn-primary:hover {
+      background: #fff;
+      box-shadow: 0 0 40px rgba(0,245,255,0.8);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--purple);
+      border: 1px solid var(--purple);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover {
+      background: rgba(180,0,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(0,245,255,0.4);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      margin-bottom: 3rem;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    /* ── FEATURES ── */
+    #features { border-top: 1px solid rgba(0,245,255,0.08); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, rgba(0,245,255,0.03) 0%, rgba(180,0,255,0.03) 100%);
+      border: 1px solid rgba(0,245,255,0.12);
+      padding: 2rem 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+    .feature-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,245,255,0.1);
+    }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+    .feature-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(200,224,255,0.6);
+    }
+
+    /* ── STATS BAR ── */
+    #stats {
+      background: var(--bg2);
+      border-top: 1px solid rgba(0,245,255,0.08);
+      border-bottom: 1px solid rgba(0,245,255,0.08);
+      padding: 3rem 2rem;
+      max-width: 100%;
+    }
+
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--cyan);
+      text-shadow: var(--glow-cyan);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(200,224,255,0.5);
+      margin-top: 0.25rem;
+    }
+
+    /* ── TEAM ── */
+    #team { border-top: 1px solid rgba(0,245,255,0.08); }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: flex-start;
+    }
+
+    .team-card {
+      background: rgba(0,245,255,0.03);
+      border: 1px solid rgba(0,245,255,0.1);
+      padding: 1.5rem;
+      min-width: 180px;
+      flex: 1 1 180px;
+      max-width: 220px;
+      text-align: center;
+      transition: border-color 0.3s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+    .team-card:hover { border-color: var(--purple); }
+
+    .team-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--bg);
+    }
+
+    .team-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-role { font-size: 0.75rem; color: var(--purple); letter-spacing: 0.1em; }
+
+    /* ── CTA FOOTER ── */
+    #cta-footer {
+      text-align: center;
+      padding: 6rem 2rem;
+      background: var(--bg2);
+      border-top: 1px solid rgba(0,245,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-footer::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,245,255,0.07) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #cta-footer .section-title { margin-bottom: 1rem; }
+    #cta-footer p { color: rgba(200,224,255,0.5); margin-bottom: 2.5rem; font-size: 0.95rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(0,245,255,0.06);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: rgba(200,224,255,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      color: rgba(0,245,255,0.4);
+      letter-spacing: 0.2em;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .hero-cta { flex-direction: column; }
+      .team-card { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">LZ//</a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="https://www.meta.com/experiences/" target="_blank">Play Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">// VR Experience — Meta Quest</div>
+      <h1 class="hero-title">LATENCY<br>ZERO</h1>
+      <p class="hero-tagline">No lag. No limits. No mercy.</p>
+      <p class="hero-desc">
+        Plug in. Jack out. In a world where milliseconds decide your fate,
+        you are the signal. A high-speed VR combat experience built for
+        those who refuse to slow down.
+      </p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="https://www.meta.com/experiences/" target="_blank">&#9654; Play on Meta Quest</a>
+        <a class="btn-secondary" href="#features">Learn More</a>
+      </div>
+    </div>
+    <div class="scroll-hint">SCROLL</div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <p class="section-label">// Core Systems</p>
+    <h2 class="section-title">What Sets It Apart</h2>
+    <div class="section-divider"></div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-icon">&#9889;</span>
+        <div class="feature-name">Zero-Lag Combat</div>
+        <p class="feature-desc">
+          Precision-engineered VR mechanics with sub-frame response times.
+          Every dodge, dash, and strike feels razor-sharp and completely in sync.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">&#127760;</span>
+        <div class="feature-name">Connected Arenas</div>
+        <p class="feature-desc">
+          Battle across sprawling cyberpunk networks. Each arena is a living
+          system — dynamic, reactive, and relentlessly hostile.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">&#128295;</span>
+        <div class="feature-name">Build Your Load-Out</div>
+        <p class="feature-desc">
+          Equip abilities, upgrade your rig, and fine-tune your playstyle.
+          No two operatives are the same.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">&#128065;&#65039;</span>
+        <div class="feature-name">Full Immersion</div>
+        <p class="feature-desc">
+          Designed from the ground up for VR. Look, reach, and move your
+          way through the grid — your body is the controller.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats">
+    <div class="stats-inner">
+      <div>
+        <span class="stat-value">0ms</span>
+        <span class="stat-label">Target Latency</span>
+      </div>
+      <div>
+        <span class="stat-value">12+</span>
+        <span class="stat-label">Unique Arenas</span>
+      </div>
+      <div>
+        <span class="stat-value">100%</span>
+        <span class="stat-label">VR Native</span>
+      </div>
+      <div>
+        <span class="stat-value">&#8734;</span>
+        <span class="stat-label">Replayability</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <section id="team">
+    <p class="section-label">// Credits</p>
+    <h2 class="section-title">The Team</h2>
+    <div class="section-divider"></div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-avatar">A</div>
+        <div class="team-name">Operator A</div>
+        <div class="team-role">Game Director</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">B</div>
+        <div class="team-name">Operator B</div>
+        <div class="team-role">Lead Developer</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">C</div>
+        <div class="team-name">Operator C</div>
+        <div class="team-role">Art &amp; Design</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">D</div>
+        <div class="team-name">Operator D</div>
+        <div class="team-role">Sound &amp; Music</div>
+      </div>
+
+    </div>
+    <p style="margin-top:2rem; font-size:0.8rem; color:rgba(200,224,255,0.3);">
+      // Replace placeholder names and roles with your real team above.
+    </p>
+  </section>
+
+  <!-- CTA FOOTER -->
+  <div id="cta-footer">
+    <div style="position:relative;z-index:1;">
+      <p class="section-label">// Ready?</p>
+      <h2 class="section-title">Jack Into the Grid</h2>
+      <p>Available now on Meta Quest. The network is waiting.</p>
+      <a class="btn-primary" href="https://www.meta.com/experiences/" target="_blank">&#9654; Get Latency Zero</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">LATENCY ZERO</span>
+    <span>&copy; 2026 Latency Zero. All rights reserved.</span>
+    <span>Built for Meta Quest</span>
+  </footer>
+
+</body>
+</html>
