@@ -29,7 +29,6 @@
       overflow-x: hidden;
     }
 
-    /* ── SCANLINES overlay ── */
     body::before {
       content: '';
       position: fixed;
@@ -45,7 +44,6 @@
       z-index: 9999;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -79,7 +77,6 @@
     }
     .nav-links a:hover { color: var(--cyan); text-shadow: var(--glow-cyan); }
 
-    /* ── HERO ── */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -92,7 +89,6 @@
       overflow: hidden;
     }
 
-    /* Grid background */
     #hero::before {
       content: '';
       position: absolute;
@@ -111,7 +107,6 @@
       to   { opacity: 1; }
     }
 
-    /* Glow orb */
     #hero::after {
       content: '';
       position: absolute;
@@ -236,7 +231,6 @@
       transform: translateY(-2px);
     }
 
-    /* Scroll hint */
     .scroll-hint {
       position: absolute;
       bottom: 2rem;
@@ -269,7 +263,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── SECTION BASE ── */
     section {
       padding: 6rem 2rem;
       max-width: 1100px;
@@ -300,7 +293,6 @@
       box-shadow: 0 0 10px var(--cyan);
     }
 
-    /* ── FEATURES ── */
     #features { border-top: 1px solid rgba(0,245,255,0.08); }
 
     .features-grid {
@@ -339,43 +331,6 @@
       color: rgba(200,224,255,0.6);
     }
 
-    /* ── STATS BAR ── */
-    #stats {
-      background: var(--bg2);
-      border-top: 1px solid rgba(0,245,255,0.08);
-      border-bottom: 1px solid rgba(0,245,255,0.08);
-      padding: 3rem 2rem;
-      max-width: 100%;
-    }
-
-    .stats-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 2rem;
-      text-align: center;
-    }
-
-    .stat-value {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: var(--cyan);
-      text-shadow: var(--glow-cyan);
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(200,224,255,0.5);
-      margin-top: 0.25rem;
-    }
-
-    /* ── TEAM ── */
     #team { border-top: 1px solid rgba(0,245,255,0.08); }
 
     .team-grid {
@@ -422,7 +377,6 @@
 
     .team-role { font-size: 0.75rem; color: var(--purple); letter-spacing: 0.1em; }
 
-    /* ── CTA FOOTER ── */
     #cta-footer {
       text-align: center;
       padding: 6rem 2rem;
@@ -443,7 +397,6 @@
     #cta-footer .section-title { margin-bottom: 1rem; }
     #cta-footer p { color: rgba(200,224,255,0.5); margin-bottom: 2.5rem; font-size: 0.95rem; }
 
-    /* ── FOOTER ── */
     footer {
       background: var(--bg);
       border-top: 1px solid rgba(0,245,255,0.06);
@@ -490,11 +443,11 @@
     <div class="hero-content">
       <div class="hero-badge">// VR Experience — Meta Quest</div>
       <h1 class="hero-title">LATENCY<br>ZERO</h1>
-      <p class="hero-tagline">No lag. No limits. No mercy.</p>
+      <p class="hero-tagline">Eat. Sleep. Explore. Repeat.</p>
       <p class="hero-desc">
-        Plug in. Jack out. In a world where milliseconds decide your fate,
-        you are the signal. A high-speed VR combat experience built for
-        those who refuse to slow down.
+        Stranded on an abandoned space station, you and your crew scavenge
+        what you can find and sell it to survive. Just don't let anyone die —
+        or do. Bodies sell too.
       </p>
       <div class="hero-cta">
         <a class="btn-primary" href="https://www.meta.com/experiences/" target="_blank">&#9654; Play on Meta Quest</a>
@@ -506,71 +459,49 @@
 
   <!-- FEATURES -->
   <section id="features">
-    <p class="section-label">// Core Systems</p>
-    <h2 class="section-title">What Sets It Apart</h2>
+    <p class="section-label">// How It Works</p>
+    <h2 class="section-title">What You'll Be Doing</h2>
     <div class="section-divider"></div>
     <div class="features-grid">
 
       <div class="feature-card">
-        <span class="feature-icon">&#9889;</span>
-        <div class="feature-name">Zero-Lag Combat</div>
+        <span class="feature-icon">&#128270;</span>
+        <div class="feature-name">Scavenge the Station</div>
         <p class="feature-desc">
-          Precision-engineered VR mechanics with sub-frame response times.
-          Every dodge, dash, and strike feels razor-sharp and completely in sync.
+          Run through the abandoned space station and collect whatever
+          objects you can find scattered across the map.
         </p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">&#127760;</span>
-        <div class="feature-name">Connected Arenas</div>
+        <span class="feature-icon">&#128176;</span>
+        <div class="feature-name">Sell Your Findings</div>
         <p class="feature-desc">
-          Battle across sprawling cyberpunk networks. Each arena is a living
-          system — dynamic, reactive, and relentlessly hostile.
+          Everything you collect can be sold. The more you find,
+          the more you earn. Loot smart, sell fast.
         </p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">&#128295;</span>
-        <div class="feature-name">Build Your Load-Out</div>
+        <span class="feature-icon">&#128128;</span>
+        <div class="feature-name">No One Gets Left Behind... For Free</div>
         <p class="feature-desc">
-          Equip abilities, upgrade your rig, and fine-tune your playstyle.
-          No two operatives are the same.
+          If one of your friends doesn't make it, don't let their
+          sacrifice go to waste — their body is worth something too.
         </p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">&#128065;&#65039;</span>
-        <div class="feature-name">Full Immersion</div>
+        <span class="feature-icon">&#128722;</span>
+        <div class="feature-name">The Shop</div>
         <p class="feature-desc">
-          Designed from the ground up for VR. Look, reach, and move your
-          way through the grid — your body is the controller.
+          Take a break from the horrors of the station and peacefully
+          explore the shop between runs.
         </p>
       </div>
 
     </div>
   </section>
-
-  <!-- STATS -->
-  <div id="stats">
-    <div class="stats-inner">
-      <div>
-        <span class="stat-value">0ms</span>
-        <span class="stat-label">Target Latency</span>
-      </div>
-      <div>
-        <span class="stat-value">12+</span>
-        <span class="stat-label">Unique Arenas</span>
-      </div>
-      <div>
-        <span class="stat-value">100%</span>
-        <span class="stat-label">VR Native</span>
-      </div>
-      <div>
-        <span class="stat-value">&#8734;</span>
-        <span class="stat-label">Replayability</span>
-      </div>
-    </div>
-  </div>
 
   <!-- TEAM -->
   <section id="team">
