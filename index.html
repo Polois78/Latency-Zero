@@ -355,46 +355,56 @@
     .team-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 2rem;
       justify-content: flex-start;
     }
 
     .team-card {
       background: rgba(0,245,255,0.03);
-      border: 1px solid rgba(0,245,255,0.1);
-      padding: 1.5rem;
-      min-width: 180px;
-      flex: 1 1 180px;
-      max-width: 220px;
+      border: 1px solid rgba(0,245,255,0.15);
+      padding: 2rem 1.8rem;
+      min-width: 220px;
+      flex: 0 1 240px;
       text-align: center;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
       clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
     }
-    .team-card:hover { border-color: var(--purple); }
+    .team-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,245,255,0.15);
+    }
 
     .team-avatar {
-      width: 64px; height: 64px;
+      width: 72px; height: 72px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--cyan), var(--purple));
-      margin: 0 auto 1rem;
+      margin: 0 auto 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Orbitron', sans-serif;
       font-weight: 900;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: var(--bg);
+      box-shadow: 0 0 15px rgba(0,245,255,0.3);
     }
 
     .team-name {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
+      font-size: 1rem;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.05em;
     }
 
-    .team-role { font-size: 0.75rem; color: var(--purple); letter-spacing: 0.1em; }
+    .team-role {
+      font-size: 0.8rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
 
     #cta-footer {
       text-align: center;
@@ -520,7 +530,7 @@
       nav { padding: 1rem; }
       .nav-links { gap: 0.8rem; }
       .hero-cta { flex-direction: column; }
-      .team-card { max-width: 100%; }
+      .team-card { max-width: 100%; flex: 1 1 100%; }
       .modal-box { padding: 1.5rem; }
     }
   </style>
@@ -611,33 +621,18 @@
     <div class="team-grid">
 
       <div class="team-card">
-        <div class="team-avatar">A</div>
-        <div class="team-name">Operator A</div>
-        <div class="team-role">Game Director</div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-avatar">B</div>
-        <div class="team-name">Operator B</div>
-        <div class="team-role">Lead Developer</div>
-      </div>
-
-      <div class="team-card">
         <div class="team-avatar">C</div>
-        <div class="team-name">Operator C</div>
-        <div class="team-role">Art &amp; Design</div>
+        <div class="team-name">Che</div>
+        <div class="team-role">Game Owner</div>
       </div>
 
       <div class="team-card">
-        <div class="team-avatar">D</div>
-        <div class="team-name">Operator D</div>
-        <div class="team-role">Sound &amp; Music</div>
+        <div class="team-avatar">Z</div>
+        <div class="team-name">Zayro</div>
+        <div class="team-role">Head Of Development</div>
       </div>
 
     </div>
-    <p style="margin-top:2rem; font-size:0.8rem; color:rgba(200,224,255,0.3);">
-      // Replace placeholder names and roles with your real team above.
-    </p>
   </section>
 
   <!-- CTA FOOTER -->
